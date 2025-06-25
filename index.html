@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CoreCircle | Login & Signup</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff7eb3, #ff758c);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      animation: backgroundAnimation 15s infinite alternate;
+    }
+
+    @keyframes backgroundAnimation {
+      0% { background: linear-gradient(135deg, #ff7eb3, #ff758c); }
+      25% { background: linear-gradient(135deg, #ff758c, #ff9068); }
+      50% { background: linear-gradient(135deg, #ff9068, #ffb347); }
+      75% { background: linear-gradient(135deg, #ffb347, #52acff); }
+      100% { background: linear-gradient(135deg, #52acff, #ff7eb3); }
+    }
+
+    .container {
+      width: 850px;
+      height: 500px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.5s ease-in-out;
+      backdrop-filter: blur(5px);
+    }
+
+    .form-container {
+      width: 50%;
+      padding: 50px;
+      transition: 0.5s ease-in-out;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #ff758c;
+      transition: color 0.5s;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: #ff758c;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 117, 140, 0.2);
+    }
+
+    button {
+      padding: 12px;
+      background-color: #ff758c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      background-color: #ff5779;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+    }
+
+    .switch-container {
+      width: 50%;
+      background: linear-gradient(135deg, #ff758c, #ff9068);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px;
+      text-align: center;
+      transition: background-color 0.5s;
+    }
+
+    .switch-container h2 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .switch-container button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      transition: all 0.3s;
+    }
+
+    .switch-container button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+    }
+
+    .move-left {
+      transform: translateX(-100%);
+    }
+
+    .move-right {
+      transform: translateX(100%);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        height: auto;
+        width: 90%;
+      }
+      .form-container, .switch-container {
+        width: 100%;
+        padding: 30px;
+      }
+    }
+  </style>
+ 
+</head>
+<script>
+  function loginRedirect(e) {
+    e.preventDefault(); // Prevent actual form submission
+    // Here you can add form validation or mock login check if needed
+    window.location.href = "dashboard.html"; // Redirect to dashboard
+  }
+</script>
+<body>
+  <div class="container" id="main-container">
+    <!-- Sign Up Form -->
+    <div class="form-container" id="signup-container">
+      <form onsubmit="signupRedirect(event)">
+        <h2>Create Account</h2>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Switch Section -->
+    <div class="switch-container">
+      <div id="switch-panel">
+        <h2>Welcome to CoreCircle</h2>
+        <p id="switch-text">Already a member?</p>
+        <button id="switch-btn">Log In</button>
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="form-container move-right" id="login-container">
+      <form onsubmit="loginRedirect(event)">
+        <h2>Log In</h2>
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("login-container");
+    const signupForm = document.getElementById("signup-container");
+    const switchBtn = document.getElementById("switch-btn");
+    const switchText = document.getElementById("switch-text");
+
+    let showLogin = false;
+
+    switchBtn.addEventListener("click", () => {
+      showLogin = !showLogin;
+
+      if (showLogin) {
+        loginForm.classList.remove("move-right");
+        signupForm.classList.add("move-left");
+        switchBtn.textContent = "Sign Up";
+        switchText.textContent = "New here?";
+      } else {
+        loginForm.classList.add("move-right");
+        signupForm.classList.remove("move-left");
+        switchBtn.textContent = "Log In";
+        switchText.textContent = "Already a member?";
+      }
+    });
+  </script>
+</body>
+</html>
